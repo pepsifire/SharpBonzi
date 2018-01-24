@@ -11,6 +11,7 @@ namespace SharpBonzi
     
     public class Permissions
     {
+        //Check if command issuer is owner of the bot (application)
         static public bool CheckOwner(DiscordUser user)
         {
             if (user == Program.discord.CurrentApplication.Owner) 

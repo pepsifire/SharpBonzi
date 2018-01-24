@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.IO;
 using DSharpPlus.Net.WebSocket;
 using DSharpPlus.Entities;
+using System.Diagnostics;
 
 namespace SharpBonzi
 {
@@ -21,7 +22,8 @@ namespace SharpBonzi
         {
             Console.Title = "SharpBonzi";
             if (!File.Exists("config.json")) {
-                Console.WriteLine("Error! Missing config.json!"); 
+                Console.WriteLine("Error! Missing config.json!");
+                CreateConfigFile();
                 Console.ReadLine();
                 System.Environment.Exit(1);
             }
@@ -56,6 +58,7 @@ namespace SharpBonzi
             {
                 await Task.Run(() =>
                 {
+                    
                     Console.WriteLine("Initialized SharpBonzi!");
                     Console.WriteLine($"Connected to {discord.Guilds.Count} Guilds");
                     
@@ -80,12 +83,26 @@ namespace SharpBonzi
         }
         public struct ConfigJson
         {
-            [JsonProperty("token")]
-            public string Token { get; private set; }
+            [JsonProperty("Token")]
+            public string Token { get; set; }
 
-            [JsonProperty("prefix")]
-            public string CommandPrefix { get; private set; }
+            [JsonProperty("CommandPrefix")]
+            public string CommandPrefix { get; set; }
         }
+        public static void CreateConfigFile()
+        {
+            var defaultConfig = new ConfigJson
+            {
+                Token = "Paste your token here",
+                CommandPrefix = ";;"
+            };  
+            string formattedJson = JsonConvert.SerializeObject(defaultConfig, Formatting.Indented);  
+            File.WriteAllText("config.json", formattedJson);
+            Console.WriteLine("Created config.json!");
+         return;
+            
+        }
+        
     }
 
 }

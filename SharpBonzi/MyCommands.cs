@@ -7,6 +7,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using System.Diagnostics;
 
 namespace SharpBonzi
 {
@@ -32,6 +33,7 @@ namespace SharpBonzi
             "https://i.imgur.com/Q2pH2PX.png"
 
         };
+        public Stopwatch AppUptime = Stopwatch.StartNew();
 
         [Command("hi"), Description("Greetings!")]
         public async Task Hi(CommandContext ctx)
@@ -53,15 +55,20 @@ namespace SharpBonzi
         [Command("info"), Description("Tells you about Bonzi Buddy")]
         public async Task Info(CommandContext ctx)
         {
+            var rnd = new Random();
             await ctx.TriggerTypingAsync();
             var embed = new DiscordEmbedBuilder
             {
                 Title = "Bonzi Buddy",
                 Description = $"Bonzi Buddy in C# run by {ctx.Client.CurrentApplication.Owner.Mention}"
                 
+                
             };
             embed.WithFooter(ctx.Client.CurrentUser.Username, ctx.Client.CurrentUser.AvatarUrl)
-                .AddField("Looking good", "Mr Worldwide" );
+                .AddField("Version", $"0.{rnd.Next(1,3)}.{rnd.Next(10,20)} pre-alpha private release steam greenlight early access (random ints are great btw)")
+                .AddField("Looking good", "Mr Worldwide");
+
+
             embed.WithImageUrl(ctx.Client.CurrentUser.AvatarUrl);
 
             await ctx.RespondAsync(embed: embed.Build());
@@ -100,6 +107,13 @@ namespace SharpBonzi
                 await ctx.RespondAsync(":x: You don't have required permissions to do this! :x:");
             }
         }
+        [Command("uptime"), Description("Show uptime of the bot")]
+        public async Task Uptime(CommandContext ctx)
+        {
+            var time = AppUptime.Elapsed;
+            await ctx.RespondAsync($"Bot uptime: {time.Days} days, {time.Hours} hours, {time.Minutes} minutes, {time.Seconds} seconds");
+        }
+        
         public void ConsoleLogger(CommandContext ctx, string input)
         {
             Console.WriteLine($"{ctx.Message.Author.Username} in {ctx.Message.Channel.Guild.Name} | {input}");
