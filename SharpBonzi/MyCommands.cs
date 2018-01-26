@@ -113,6 +113,16 @@ namespace SharpBonzi
             var time = AppUptime.Elapsed;
             await ctx.RespondAsync($"Bot uptime: {time.Days} days, {time.Hours} hours, {time.Minutes} minutes, {time.Seconds} seconds");
         }
+        [Command("setplaying"), Description("Set the current game")]
+        public async Task Setplaying(CommandContext ctx, string input)
+        {
+            if (Permissions.CheckOwner(ctx.Message.Author))
+            {
+                var game = new DiscordGame();
+                game.Name = input;
+                await ctx.Client.UpdateStatusAsync(game);
+            }
+        }
         
         public void ConsoleLogger(CommandContext ctx, string input)
         {
