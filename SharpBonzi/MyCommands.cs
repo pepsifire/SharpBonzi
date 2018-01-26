@@ -121,7 +121,13 @@ namespace SharpBonzi
                 var game = new DiscordGame();
                 game.Name = input;
                 await ctx.Client.UpdateStatusAsync(game);
+                await ctx.RespondAsync($"Set current game to: {input}");
             }
+            else
+            {
+                await ctx.RespondAsync("You do not have the required permissions to do this.");
+            }
+                
         }
         
         public void ConsoleLogger(CommandContext ctx, string input)
