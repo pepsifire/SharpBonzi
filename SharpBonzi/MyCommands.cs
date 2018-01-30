@@ -129,6 +129,15 @@ namespace SharpBonzi
             }
                 
         }
+        [Command("featurereq"), Description("Request a feature to the bot")]
+        public async Task FeatureReq(CommandContext ctx, string input)
+        {
+            await ctx.RespondAsync("Processing your feature request...");
+            await ctx.TriggerTypingAsync();
+            await Task.Delay(2000);
+            await ctx.RespondAsync("Error: Could not process feature request.");
+            await ctx.RespondAsync("Reason: Feature not implemented yet.");
+        }
         
         public void ConsoleLogger(CommandContext ctx, string input)
         {
