@@ -57,14 +57,12 @@ namespace SharpBonzi
             discord.Ready += async e =>
             {
                 await Task.Run(() =>
-                {
-                    
+                {        
                     Console.WriteLine("Initialized SharpBonzi!");
                     Console.WriteLine($"Connected to {discord.Guilds.Count} Guilds");
-                    
                 });
-                //Init Playing
-                var playingGame = new DiscordGame();
+                    //Init Playing
+                    var playingGame = new DiscordGame();
                 playingGame.Name = "Windows 95"; 
                 await discord.UpdateStatusAsync(playingGame);
             };

@@ -139,6 +139,36 @@ namespace SharpBonzi
             await ctx.RespondAsync("Reason: Feature not implemented yet.");
         }
         
+        [Command("aol"), Description("Connect to AOL, start by typing 'help'")]
+        public async Task AOL(CommandContext ctx, string input)
+        {
+            if (input == "help")
+            {
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = "America OnLine",
+                    Description = "Connect to America OnLine with Bonzi Buddy!"
+                };
+                embed.WithFooter("America OnLine usage guide")
+                .AddField("Connecting", "Use the command with the keyword 'connect' to connect to America OnLine")
+                .AddField("Disconnecting", "Use the command with the keyword 'disconnect' to disconnect from America OnLine");
+                await ctx.RespondAsync(embed: embed.Build());
+            }
+            if (input == "connect")
+            {
+                await ctx.TriggerTypingAsync();
+                await ctx.RespondAsync("Connecting to America OnLine...");
+                await Task.Delay(2000);
+                await ctx.RespondAsync("Connected to America Online!");
+                await ctx.RespondAsync("Warning: You do not have an America OnLine subscription, your connection is limited to 2 seconds.");
+                await Task.Delay(2000);
+                await ctx.RespondAsync("Disconnected. Welcome back soon!");
+            }
+            if (input == "disconnect")
+            {
+                await ctx.RespondAsync("Error: You must be connected to America OnLine to disconnect.");
+            }
+        }
         public void ConsoleLogger(CommandContext ctx, string input)
         {
             Console.WriteLine($"{ctx.Message.Author.Username} in {ctx.Message.Channel.Guild.Name} | {input}");
