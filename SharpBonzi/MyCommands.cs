@@ -169,6 +169,11 @@ namespace SharpBonzi
                 await ctx.RespondAsync("Error: You must be connected to America OnLine to disconnect.");
             }
         }
+        [Command("tip"), Description("Tip of the day")]
+        public async Task Tip(CommandContext ctx)
+        {
+            await ctx.RespondAsync("Tip of the day is: https://www.youtube.com/watch?v=6x7teBrEGJE");
+        }
         public void ConsoleLogger(CommandContext ctx, string input)
         {
             Console.WriteLine($"{ctx.Message.Author.Username} in {ctx.Message.Channel.Guild.Name} | {input}");
